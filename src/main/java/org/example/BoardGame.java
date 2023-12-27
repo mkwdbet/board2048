@@ -13,10 +13,7 @@ public class BoardGame implements BoardGameSpec {
 
     @Override
     public Board keyRight() {
-        Board b = new Board();
-        b.init(0);
-        b.set(2, 2, 9);
-        return b;
+        return null;
     }
 
     @Override
