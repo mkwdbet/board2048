@@ -58,7 +58,7 @@ public class Main {
 
         for (int i = 0; i < Board.HEIGHT; i++) {
             for (int j = 0; j < Board.WIDTH; j++) {
-                if (board.get(i, j) == 0) {
+                if (board.get(i, j) != 0) {
                     boardView[i][j].setText("" + board.get(i, j));
                 } else {
                     boardView[i][j].setText("");

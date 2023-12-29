@@ -1,5 +1,7 @@
 package org.example;
 
+import java.util.*;
+
 public class Board {
     public static final int WIDTH = 4;
     public static final int HEIGHT = 4;
@@ -27,5 +29,17 @@ public class Board {
         }
 
         board[i][j] = value;
+    }
+
+    public List<BoardPoint> getEmptyPoints() {
+        List<BoardPoint> pointList = new ArrayList<BoardPoint>();
+        for (int i = 0; i < HEIGHT; i++) {
+            for (int j = 0; j < WIDTH; j++) {
+                if (board[i][j] == 0) {
+                    pointList.add(new BoardPoint(i, j));
+                }
+            }
+        }
+        return pointList;
     }
 }
