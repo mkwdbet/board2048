@@ -49,7 +49,7 @@ public class BoardGame implements BoardGameSpec {
         return filledCols;
     }
 
-    private void sumValues(Board board) {
+    private void sumValuesToLeft(Board board) {
         for (int i = 0; i < Board.HEIGHT; i++) {
             int[] checkedRow = checkRow(board, i);
             int prevValue = 0;
@@ -92,9 +92,51 @@ public class BoardGame implements BoardGameSpec {
         }
     }
 
+    private void sumValuesToRight(Board board) {
+        for (int i = 0; i < Board.HEIGHT; i++) {
+            int[] checkedRow = checkRow(board, i);
+            int prevValue = -1;
+            int prevIndex = -1;
+
+            for (int j = Board.WIDTH - 1; j >= 0; j--) {
+                // 이전 값과 같은지 비교, set
+                if (checkedRow[j] == 1) {
+                    if (prevValue == board.get(i, j)) {
+                        board.set(i, prevIndex, prevValue*2);
+                        board.set(i, j, 0);
+                        prevValue = 0;
+                    } 
+                    else {
+                        prevValue = board.get(i, j);
+                        prevIndex = j;
+                    }
+                }
+            }       
+        }
+    }
+
+    private void shiftRight(Board board) {
+        for (int i = 0; i < Board.HEIGHT; i++) {
+            int[] checkedRow = checkRow(board, i);
+            int cnt = 0;
+            
+            for (int j = Board.WIDTH - 1; j >= 0; j--) {
+               
+                // 값이 있을 때만 오른쪽으로 정렬
+                if (cnt > 0 && checkedRow[j] == 1) {
+                    board.set(i, j + cnt, board.get(i, j));
+                    board.set(i, j, 0);
+                }
+                
+                if (checkedRow[j] == 0) {
+                    cnt += 1;
+                }
+            }
+        }
+    }
     @Override
     public Board keyLeft() {
-        sumValues(board);
+        sumValuesToLeft(board);
         shiftLeft(board);
         boolean boardEmpty = allocateNewNum(board);
         return board;        
@@ -102,10 +144,10 @@ public class BoardGame implements BoardGameSpec {
 
     @Override
     public Board keyRight() {
-        Board b = new Board();
-        b.init(0);
-        b.set(2, 2, 9);
-        return b;
+        sumValuesToRight(board);
+        shiftRight(board);
+        boolean boardEmpty = allocateNewNum(board);
+        return board; 
     }
 
     @Override
