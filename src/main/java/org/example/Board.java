@@ -25,7 +25,7 @@ public class Board {
 
     public void set(int i, int j, int value) {
         if (i < 0 || i >= HEIGHT || j < 0 || j >= WIDTH) {
-            throw new IllegalArgumentException("잚못된 값에 접근했습니다.");
+            throw new IllegalArgumentException("잚못된 값에 접근했습니다. (" + i + "," +  j + ")");
         }
 
         board[i][j] = value;
