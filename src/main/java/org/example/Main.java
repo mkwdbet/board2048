@@ -4,7 +4,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
+import java.util.Random;
 
 import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 
@@ -43,6 +46,8 @@ public class Main {
                 JButton cell = new JButton("" + i + "," + j);
                 cell.setSize(WIDTH_SIZE, HEIGHT_SIZE);
                 cell.setFocusable(false);
+                cell.setFont(new Font("Arial", Font.PLAIN, 40));
+
                 boardView[i][j] = cell;
                 f.getContentPane().add(boardView[i][j]);
             }
@@ -59,12 +64,14 @@ public class Main {
         for (int i = 0; i < Board.HEIGHT; i++) {
             for (int j = 0; j < Board.WIDTH; j++) {
                 if (board.get(i, j) != 0) {
+                    boardView[i][j].setForeground(ColorGenerator.generateColor(board.get(i, j)));
                     boardView[i][j].setText("" + board.get(i, j));
                 } else {
                     boardView[i][j].setText("");
                 }
             }
         }
+
     }
 
     private void addListener(BoardGameSpec game) {
@@ -91,5 +98,26 @@ public class Main {
             public void keyReleased(KeyEvent e) {
             }
         });
+    }
+
+    class ColorGenerator {
+        private static Map<Integer, Color> colorMap = new HashMap<>();
+        private static Random rand = new Random();
+
+        public static Color generateColor(int number) {
+            if (colorMap.containsKey(number)) {
+                return colorMap.get(number);
+            }
+            Color newColor = generateRandomColor().brighter();
+            colorMap.put(number, newColor);
+            return newColor;
+        }
+
+        private static Color generateRandomColor() {
+            float r = rand.nextFloat();
+            float g = rand.nextFloat();
+            float b = rand.nextFloat();
+            return new Color(r, g, b);
+        }
     }
 }
