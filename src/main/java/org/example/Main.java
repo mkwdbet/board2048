@@ -35,7 +35,7 @@ public class Main {
     private void drawGUI() {
         f.setSize(Board.WIDTH * WIDTH_SIZE, Board.HEIGHT * HEIGHT_SIZE);
         f.setResizable(false);
-        f.setLocation(100, 100); //TODO
+        f.setLocationRelativeTo(null);
         f.setDefaultCloseOperation(EXIT_ON_CLOSE);
         f.getContentPane().setLayout(new GridLayout(Board.HEIGHT, Board.WIDTH));
 
@@ -74,6 +74,17 @@ public class Main {
 
     }
 
+    private void showGameOverDialog() {
+        int result = 0;
+        result = JOptionPane.showConfirmDialog(null, "GameOver!! 다시 시작하시겠습니까?");
+        if (result == 0) {
+            Board initializedBoard = game.init();
+            drawBoard(initializedBoard);
+        } else {
+            System.exit(0);
+        }
+    }
+
     private void addListener(BoardGameSpec game) {
         f.addKeyListener(new KeyListener() {
             @Override
@@ -83,14 +94,18 @@ public class Main {
 
             @Override
             public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_UP) {
-                    drawBoard(game.keyUp());
-                } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-                    drawBoard(game.keyDown());
-                } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-                    drawBoard(game.keyRight());
-                } else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-                    drawBoard(game.keyLeft());
+                try {
+                    if (e.getKeyCode() == KeyEvent.VK_UP) {
+                        drawBoard(game.keyUp());
+                    } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+                        drawBoard(game.keyDown());
+                    } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+                        drawBoard(game.keyRight());
+                    } else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+                        drawBoard(game.keyLeft());
+                    }
+                } catch (GameOverException gameOver) {
+                    showGameOverDialog();
                 }
             }
 
