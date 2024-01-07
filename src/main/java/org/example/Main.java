@@ -115,7 +115,7 @@ public class Main {
         });
     }
 
-    class ColorGenerator {
+    class ColorGenerator {  
         private static Map<Integer, Color> colorMap = new HashMap<>();
         private static Random rand = new Random();
 
@@ -123,7 +123,7 @@ public class Main {
             if (colorMap.containsKey(number)) {
                 return colorMap.get(number);
             }
-            Color newColor = generateRandomColor().brighter();
+            Color newColor = generateRandomColor();
             colorMap.put(number, newColor);
             return newColor;
         }

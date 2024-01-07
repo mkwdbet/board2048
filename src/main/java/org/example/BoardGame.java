@@ -114,6 +114,27 @@ public class BoardGame implements BoardGameSpec {
             }       
         }
     }
+    private void sumValues(Board board, Direction direction) {
+        for (BoardPoint[] row : direction.range){
+            int prevValue = -1;
+            BoardPoint prevPoint = null;
+            for (BoardPoint point : row){
+                if(board.get(point) != 0){
+                    if(prevValue == board.get(point)){
+                        board.set(prevPoint, prevValue*2);
+                        board.set(point, 0);
+                        prevValue = 0;
+                    }
+                    else{
+                        prevValue = board.get(point);
+                        prevPoint = point;
+                    }
+                }
+            }
+        }
+    }
+
+
 
     private void shiftRight(Board board) {
         for (int i = 0; i < Board.HEIGHT; i++) {
@@ -134,29 +155,52 @@ public class BoardGame implements BoardGameSpec {
             }
         }
     }
+    private void shift(Board board, Direction direction) {
+        for (BoardPoint row[] : direction.range){
+            int cnt = 0;
+            for(BoardPoint point : row) {
+                if (cnt > 0 && board.get(point) != 0){
+                    board.set(point.shift(direction,cnt), board.get(point));
+                    board.set(point, 0);
+                }
+
+                if (board.get(point) == 0){
+                    cnt += 1;
+                }
+            }
+        }
+    }
     @Override
     public Board keyLeft() {
-        sumValuesToLeft(board);
-        shiftLeft(board);
+        sumValues(board,Direction.LEFT);
+        shift(board, Direction.LEFT);
+        
         boolean boardEmpty = allocateNewNum(board);
         return board;        
     }
 
     @Override
     public Board keyRight() {
-        sumValuesToRight(board);
-        shiftRight(board);
+        sumValues(board,Direction.RIGHT);
+        shift(board, Direction.RIGHT);
+        
         boolean boardEmpty = allocateNewNum(board);
         return board; 
     }
 
     @Override
     public Board keyUp() {
-        return null;
+        sumValues(board,Direction.UP);
+        shift(board, Direction.UP);
+        boolean boardEmpty = allocateNewNum(board);
+        return board;
     }
 
     @Override
     public Board keyDown() {
-        return null;
+        sumValues(board,Direction.DOWN);
+        shift(board, Direction.DOWN);
+        boolean boardEmpty = allocateNewNum(board);
+        return board;
     }
 }

@@ -19,7 +19,15 @@ public class BoardPoint {
 
     }
 
+    public BoardPoint shift(Direction direction, int step) {
+        if (direction == Direction.LEFT || direction == Direction.RIGHT) {
+            return new BoardPoint(this.y, this.x + step * direction.sign);
+        }
+        return new BoardPoint(this.y + step * direction.sign, this.x);
+    }
+
     public String toString() {
         return "(" + this.y + "," + this.x + ")";
     }
+
 }
