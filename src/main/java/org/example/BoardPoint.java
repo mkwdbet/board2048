@@ -19,4 +19,7 @@ public class BoardPoint {
 
     }
 
+    public String toString() {
+        return "(" + this.y + "," + this.x + ")";
+    }
 }

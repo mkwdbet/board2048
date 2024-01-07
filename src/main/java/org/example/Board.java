@@ -23,12 +23,28 @@ public class Board {
         return board[i][j];
     }
 
+    public int get(BoardPoint p) {
+        if (p.getY() < 0 || p.getY() >= HEIGHT || p.getX() < 0 || p.getX() >= WIDTH) {
+            throw new IllegalArgumentException("잚못된 값에 접근했습니다.");
+        }
+
+        return board[p.getY()][p.getX()];
+    }
+
     public void set(int i, int j, int value) {
         if (i < 0 || i >= HEIGHT || j < 0 || j >= WIDTH) {
             throw new IllegalArgumentException("잚못된 값에 접근했습니다. (" + i + "," +  j + ")");
         }
 
         board[i][j] = value;
+    }
+
+    public void set(BoardPoint p, int value) {
+        if (p.getY() < 0 || p.getY() >= HEIGHT || p.getX() < 0 || p.getX() >= WIDTH) {
+            throw new IllegalArgumentException("잚못된 값에 접근했습니다. " + p.toString());
+        }
+
+        board[p.getY()][p.getX()] = value;
     }
 
     public List<BoardPoint> getEmptyPoints() {
