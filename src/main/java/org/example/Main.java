@@ -46,7 +46,7 @@ public class Main {
                 JButton cell = new JButton("" + i + "," + j);
                 cell.setSize(WIDTH_SIZE, HEIGHT_SIZE);
                 cell.setFocusable(false);
-                cell.setFont(new Font("Arial", Font.PLAIN, 40));
+                cell.setFont(new Font("Arial", Font.PLAIN, 25));
 
                 boardView[i][j] = cell;
                 f.getContentPane().add(boardView[i][j]);
@@ -115,7 +115,7 @@ public class Main {
         });
     }
 
-    class ColorGenerator {  
+    class ColorGenerator {
         private static Map<Integer, Color> colorMap = new HashMap<>();
         private static Random rand = new Random();
 

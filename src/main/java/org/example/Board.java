@@ -7,6 +7,27 @@ public class Board {
     public static final int HEIGHT = 4;
     private int[][] board = new int[HEIGHT][WIDTH];
 
+    public Board copy() {
+        Board newBoard = new Board();
+        for (int i = 0; i < Board.HEIGHT; i++) {
+            for (int j = 0; j < Board.WIDTH; j++) {
+                newBoard.set(i, j, board[i][j]);
+            }
+        }
+        return newBoard;
+    }
+
+    public boolean equals(Board board) {
+        for (int i = 0; i < Board.HEIGHT; i++) {
+            for (int j = 0; j < Board.WIDTH; j++) {
+                if (this.board[i][j] != board.get(i, j)) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
     public void init(int initValue) {
         for (int i = 0; i < HEIGHT; i++) {
             for (int j = 0; j < WIDTH; j++) {
@@ -33,7 +54,7 @@ public class Board {
 
     public void set(int i, int j, int value) {
         if (i < 0 || i >= HEIGHT || j < 0 || j >= WIDTH) {
-            throw new IllegalArgumentException("잚못된 값에 접근했습니다. (" + i + "," +  j + ")");
+            throw new IllegalArgumentException("잚못된 값에 접근했습니다. (" + i + "," + j + ")");
         }
 
         board[i][j] = value;
